@@ -12,14 +12,28 @@ import SiteNavbar from './components/SiteNavbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const auth = 'Basic ' + Buffer.from(process.env.REACT_APP_INFURA_PROJECT_ID + ':' + process.env.REACT_APP_INFURA_API_KEY_SECRET).toString('base64');
+// const ipfs = create({
+//   host: 'ipfs.infura.io',
+//   port: 5001,
+//   protocol: 'https',
+//   headers: {
+//     authorization: auth
+//   }
+// });
+
+const hostUrl = "127.0.0.1";
+const port = 5001;
+const protocol = "http";
+
 const ipfs = create({
-  host: 'ipfs.infura.io',
+  host: hostUrl,
   port: 5001,
-  protocol: 'https',
-  headers: {
-    authorization: auth
-  }
+  protocol: 'http'
+ 
 });
+
+
+
 
 function App() {
   const [account, setAccount] = useState('');

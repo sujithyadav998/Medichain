@@ -20,6 +20,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
   const [showModal, setShowModal] = useState(false);
   const [showRecordModal, setShowRecordModal] = useState(false);
   const [transactionsList, setTransactionsList] = useState([]);
+  const [hostUrl, setHostUrl] = useState('localhost');
 
   const getDoctorData = async () => {
     var doctor = await mediChain.methods.doctorInfo(account).call();
@@ -66,7 +67,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
   }
   const handleShowRecordModal = async (patient) => {
     var record = {}
-    await fetch(`${process.env.REACT_APP_INFURA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
+    await fetch(`http://${hostUrl}:8080/ipfs/${patient.record}`)
       .then(res => res.json())
       .then(data => record = data)
     await setPatientRecord(record);
@@ -85,7 +86,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
       })
     }
     var record = {}
-    await fetch(`${process.env.REACT_APP_INFURA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
+    await fetch(`http://${hostUrl}:8080/ipfs/${patient.record}`)
       .then(res => res.json())
       .then(data => {
         record = data;
@@ -273,7 +274,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
                                 <td>{treatment.treatment}</td>
                                 <td>
                                   { treatment.prescription ? 
-                                    <Link to={`${process.env.REACT_APP_INFURA_DEDICATED_GATEWAY}/ipfs/${treatment.prescription}`} target="_blank"><Button variant="coolColor">View</Button></Link>
+                                    <Link to={`http://${hostUrl}:8080/ipfs/${treatment.prescription}`} target="_blank"><Button variant="coolColor">View</Button></Link>
                                     : "No document uploaded"
                                   }
                                 </td>

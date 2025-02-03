@@ -20,6 +20,7 @@ const Patient = ({mediChain, account, ethValue}) => {
   const [transactionsList, setTransactionsList] = useState([]);
   const [showRecordModal, setShowRecordModal] = useState(false);
   const [patientRecord, setPatientRecord] = useState(null);
+  const [hostUrl, setHostUrl] = useState('localhost');
 
   const getPatientData = async () => {
       var patient = await mediChain.methods.patientInfo(account).call();
@@ -92,7 +93,7 @@ const Patient = ({mediChain, account, ethValue}) => {
   const handleCloseRecordModal = () => setShowRecordModal(false);
   const handleShowRecordModal = async () => {
     var record = {}
-    await fetch(`${process.env.REACT_APP_INFURA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
+    await fetch(`http://${hostUrl}:8080/ipfs/${patient.record}`)
       .then(res => res.json())
       .then(data => record = data)
     await setPatientRecord(record);

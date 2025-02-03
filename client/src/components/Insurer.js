@@ -22,6 +22,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
     const [claimsList, setClaimsList] = useState([]);
     const [showRecordModal, setShowRecordModal] = useState(false);
     const [patientRecord, setPatientRecord] = useState(null);
+    const [hostUrl, setHostUrl] = useState('localhost');
   
     const getInsurerData = async () => {
         var insurer = await mediChain.methods.insurerInfo(account).call();
@@ -40,7 +41,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
     const handleCloseRecordModal = () => setShowRecordModal(false);
     const handleShowRecordModal = async (e, patient) => {
         var record = {}
-        await fetch(`${process.env.REACT_APP_INFURA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
+        await fetch(`http://${hostUrl}:8080/ipfs/${patient.record}`)
             .then(res => res.json())
             .then(data => record = data)
         await setPatientRecord(record);
